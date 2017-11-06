@@ -31,7 +31,15 @@
                  @endforeach
                  <td>{{$pesans->subjek}}</td>
                  <td>{{$pesans->created_at}}</td>
-                 <td><a href="/pesan/{{$pesans->id_pesan}}"><i class="material-icons">remove_red_eye</i></a></td>
+                 <td>
+                   {{-- <form action="../detail_pesan" method="post"> {{ csrf_field() }}
+                     <input type="hidden" name="id_pesan" value="{{$pesans->id_pesan}}">
+                     <button type="submit" class="btn_detail" >
+                       <i class="material-icons">remove_red_eye</i>
+                     </button>
+                   </form> --}}
+                   <a href="/pesan/{{$pesans->id_pesan}}"><i class="material-icons">remove_red_eye</i></a>
+                 </td>
                </tr>
              @endforeach
            </tbody>

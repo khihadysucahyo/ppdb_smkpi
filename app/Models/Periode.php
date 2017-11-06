@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Tahun_Ajaran extends Model
+class Periode extends Model
 {
-    protected $guarded = ['id','tahun'];
-    protected $table = 'tahun_ajaran';
+    protected $guarded = ['id'];
+    protected $table = 'periode';
     public $timestamps = false;
 
     public function Profile()

@@ -8,13 +8,13 @@
           <div class="card-title left-align indigo-text"><strong>Detail Pesan</strong></div>
           <div class="card-action ">
 
-            <form class="form-horizontal" role="form">
-                <div class="row">
+            <form class="form-horizontal" role="form" action="#reply_div">
+                {{-- <div class="row">
                   <div class="input-field col s12">
                     <input required readonly id="id_pesan" type="text" class="validate"  value="{{$pesan->id_pesan}}">
                     <label for="id_pesan">ID_Pesan</label>
                   </div>
-                </div>
+                </div> --}}
 
                 <div class="row">
                   <div class="input-field col s12">
@@ -47,6 +47,9 @@
 
             <div class="row">
                 <div class="input-field offset-s12">
+                  {{-- <a id="reply_btn" href="#reply_div" class="btn btn-primary right indigo">
+                    <i class="material-icons right">reply</i> Reply
+                  </a> --}}
                   <button id="reply" type="submit" class="btn btn-primary right indigo">
                     <i class="material-icons right">reply</i> Reply
                   </button>
@@ -75,7 +78,7 @@
                 <input type="hidden" name="id_peserta" value="{{$pesan->id_peserta}}">
                 <div class="row">
                   <div class="input-field col s12">
-                    <input readonly required  id="subject" type="text" class="validate" name="subject" value="REPLY[#{{$pesan->id_pesan}}]">
+                    <input  required  id="subject" type="text" class="validate" name="subject" value="REPLY[#{{$pesan->id_pesan}}]">
                     <label for="subject">Subject</label>
                   </div>
                 </div>

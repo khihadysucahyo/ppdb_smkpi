@@ -34,7 +34,10 @@ class PesanController extends Controller
 
     public function detail($id)
     {
-        $pesan  = Pesan::Where('id_pesan', $id)->get()->first();
+        $pesan  = Pesan::Where('id_pesan', $id)->where('id_peserta', Auth::user()->id)->get()->first();
+        if (!$pesan) {
+          return abort(404);
+        }
         return view('pesan.detail', compact('pesan'));
     }
 

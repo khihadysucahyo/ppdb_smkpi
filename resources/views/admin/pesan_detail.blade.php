@@ -11,14 +11,20 @@
           <div class="card-content">
             <div class="card-title left-align indigo-text"><strong>Detail Pesan</strong></div>
             <div class="card-action ">
-
+              @if ($errors->any())
+                <div class="col s12 z-depth-1 #ffebee red lighten-5 red-text" style="border-radius:5px; padding:5px;">
+                @foreach ($errors->all() as $err)
+                    <li>{{$err}}</li>
+                @endforeach
+              </div><br>
+              @endif
               <form class="form-horizontal" role="form">
-                  <div class="row">
+                  {{-- <div class="row">
                     <div class="input-field col s12">
                       <input required readonly id="id_pesan" type="text" class="validate"  value="{{$pesan->id_pesan}}">
                       <label for="id_pesan">ID_Pesan</label>
                     </div>
-                  </div>
+                  </div> --}}
 
                   <div class="row">
                     <div class="input-field col s12">
@@ -73,7 +79,7 @@
                   <input type="hidden" name="id_peserta" value="{{$pesan->id_peserta}}">
                   <div class="row">
                     <div class="input-field col s12">
-                      <input readonly required  id="subject" type="text" class="validate" name="subject" value="REPLY[#{{$pesan->id_pesan}}]__SUBJECT[{{$pesan->subjek}}]">
+                      <input required  id="subject" type="text" class="validate" name="subject" value="REPLY[#{{$pesan->id_pesan}}]">
                       <label for="subject">Subject</label>
                     </div>
                   </div>

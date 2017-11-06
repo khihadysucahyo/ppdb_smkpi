@@ -14,6 +14,9 @@ class ReplyRequest extends FormRequest
     //  public function response(array $errors){
     //      return redirect('/pesan#tulis-pesan')->with('message', 'Pesan gagal dikirim!')->withErrors($errors)->withInput();
     //  }
+    public function response(array $errors){
+        return redirect()->back()->with('message', 'Pesan gagal dikirim!')->withErrors($errors)->withInput();
+    }
 
     public function authorize()
     {
@@ -28,7 +31,7 @@ class ReplyRequest extends FormRequest
     public function rules()
     {
         return [
-          'subject'  => 'required|max:30',
+          'subject'  => 'required|max:60',
           'pesan' => 'required|max:250',
           'lampiran' => 'mimes:jpeg,png,pdf,rar|max:1000'
         ];

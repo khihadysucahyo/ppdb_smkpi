@@ -6,6 +6,17 @@ html {
   color: white;
  }
 
+.btn_detail{
+     background:none!important;
+     color:inherit;
+     border:none;
+     padding:0!important;
+     font: inherit;
+     /*border is optional*/
+     border-bottom:1px solid #444;
+     cursor: pointer;
+}
+
 input.border-input{
   background-color: rgba(255,255,255,0.9);
   width: 100%;

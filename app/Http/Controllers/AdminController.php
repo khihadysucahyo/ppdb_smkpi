@@ -12,10 +12,12 @@ use App\Models\Tahun;
 use App\Models\Profile;
 use App\Models\Pekerjaan;
 use App\Models\Pengaturan;
-use App\Models\Tahun_Ajaran;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\SendRequest;
+use App\Http\Requests\ReplyRequest;
 use App\Http\Requests\UploadRequest;
 use App\Http\Requests\SimpanRequest;
 use Illuminate\Support\Facades\Storage;
@@ -24,9 +26,9 @@ class AdminController extends Controller
 {
     public function __construct(Request $request)
     {
-        $tahun_ajaran = Tahun_Ajaran::all();
+        $periode = Periode::all();
         $pengaturan = Pengaturan::get()->first();
-        View::share('tahun_ajaran', $tahun_ajaran);
+        View::share('periode', $periode);
         View::share('pengaturan', $pengaturan);
         View::share('hal',$request->page);
     }
@@ -88,10 +90,10 @@ class AdminController extends Controller
         $profile = Profile::Where('user_id',Auth::user()->id)->get()->first();
         $users = User::join('profiles','profiles.user_id','=','users.id')
                         ->Where('role',1)
-                        ->Where('tahun_ajaran'   , $p1=(isset($request->tahun_ajaran))    ?"=":"<>", ($p1=="=")?$request->tahun_ajaran   :"0")
-                        ->Where('jenis_kelamin'  , $p2=(isset($request->jenkel))          ?"=":"<>", ($p2=="=")?$request->jenkel         :"undefined")
-                        ->Where('agama'          , $p3=(isset($request->agama))           ?"=":"<>", ($p3=="=")?$request->agama          :"undefined")
-                        ->Where('status_diterima', $p4=(isset($request->status_diterima)) ?"=":"<>", ($p4=="=")?$request->status_diterima:"undefined")
+                        ->Where('periode_id'     , $p1=(isset($request->periode))         ?"=":"<>", ($p1=="=")?$request->periode           :"0")
+                        ->Where('jenis_kelamin'  , $p2=(isset($request->jenkel))          ?"=":"<>", ($p2=="=")?$request->jenkel            :"undefined")
+                        ->Where('agama'          , $p3=(isset($request->agama))           ?"=":"<>", ($p3=="=")?$request->agama             :"undefined")
+                        ->Where('status_diterima', $p4=(isset($request->status_diterima)) ?"=":"<>", ($p4=="=")?$request->status_diterima   :"undefined")
                         ->paginate(7);
         return view('admin.peserta', compact('users', 'profile'));
     }
@@ -183,7 +185,7 @@ class AdminController extends Controller
       return view('admin.pesan_detail', compact('profile', 'pesan'));
     }
 
-    public function send(Request $request)
+    public function send(SendRequest $request)
     {
       Pesan::create([
           'id_peserta' => $request->userid,
@@ -196,7 +198,7 @@ class AdminController extends Controller
       return redirect('/pesan_admin')->with('message', 'Pesan berhasil dikirim!');
     }
 
-    public function reply(Request $request, $id)
+    public function reply(ReplyRequest $request, $id)
     {
       Pesan::create([
           'id_admin' => Auth::user()->id,

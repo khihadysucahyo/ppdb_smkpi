@@ -30,12 +30,12 @@
         <form class="form-horizontal" role="form" method="get" action="../peserta/filter">
           {{-- {{ csrf_field() }} --}}
               <div class="col m2 s3">
-                <select name="tahun_ajaran"  id="" style="height:30px;">
-                  <option value="" disabled selected>Tahun Ajaran</option>
+                <select name="periode"  id="" style="height:30px;">
+                  <option value="" disabled selected>Periode</option>
                   {{-- <option value="" selected>All</option> --}}
-                  @foreach ($tahun_ajaran as $th)
-                    <option @isset($_GET['tahun_ajaran']) {{($_GET['tahun_ajaran']==$th->id) ? 'selected' :''}} @endisset
-                      value="{{$th->id}}">{{$th->tahun_ajaran}}</option>
+                  @foreach ($periode as $per)
+                    <option @isset($_GET['periode']) {{($_GET['periode']==$per->id) ? 'selected' :''}} @endisset
+                      value="{{$per->id}}">{{$per->periode}}</option>
                   @endforeach
                 </select>
                 <label>Tahun Ajaran</label>
@@ -93,7 +93,7 @@
         {{-- </form> --}}
       </div><hr>
       {{-- end filter --}}
-
+      <pre><b>Total records: {{$users->total()}}</b></pre>
       <table class="striped  responsive-table">
          <thead>
            <tr>
@@ -127,11 +127,11 @@
                  <td>{{$user->profile->status_verifikasi}}</td>
                  <td>{{$user->profile->status_diterima}}</td>
                  <td>
-                   <a href="edit/{{$user->id}}"><i class="material-icons black-text">mode_edit</i></a>
-                   <a href="hapus/{{$user->id}}" onclick="return confirm('hapus peserta {{$user->profile->nama}}?')">
+                   <a href="../edit/{{$user->id}}"><i class="material-icons black-text">mode_edit</i></a>
+                   <a href="../hapus/{{$user->id}}" onclick="return confirm('hapus peserta {{$user->profile->nama}}?')">
                      <i class="material-icons black-text">delete_forever</i>
                    </a>
-                   <a href="cetakform/{{$user->id}}"><i class="material-icons black-text">print</i></a>
+                   <a href="../cetakform/{{$user->id}}"><i class="material-icons black-text">print</i></a>
                  </td>
                </tr>
                @php $i++; $no++ @endphp
@@ -140,7 +140,7 @@
            </form>
          </tbody>
        </table>
-       {{$users->links('vendor.pagination.default')}}
+       {{$users->appends(Request::except('page'))->links('vendor.pagination.default')}}
     </div>
 
 

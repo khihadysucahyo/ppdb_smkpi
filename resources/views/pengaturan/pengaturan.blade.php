@@ -13,16 +13,16 @@
             <div class="card-action ">
               <form class="form-horizontal" role="form" method="post" action="pengaturan">
                   {{ csrf_field() }}
-
+                  <a href="#" class="teal-text"><i class="material-icons left">add</i>Tambah Periode Tahun Ajaran</a>
                   <div class="row">
                     <div class="input-field col m3 s12 ">
-                      <select name="tahun_ajaran" required >
+                      <select name="periode_id" required >
                         <option  disabled selected>Pilih salah satu</option>
-                        @foreach ($tahun_ajaran as $th)
-                          <option {{ ($th->id==$pengaturan->tahun_ajaran) ? 'selected' : '' }} value="{{$th->id}}">{{$th->tahun_ajaran}}</option>
+                        @foreach ($periode as $per)
+                          <option {{ ($per->id==$pengaturan->periode_id) ? 'selected' : '' }} value="{{$per->id}}">{{$per->periode}}</option>
                         @endforeach
                       </select>
-                      <label>Penerimaan Tahun Ajaran</label>
+                      <label>Periode Pendaftaran</label>
                     </div>
 
                     <div class="switch col offset-m1 m3 s12">
@@ -85,12 +85,12 @@
                     </div>
                   </div>
 
-                  <div class="row">
+                  {{-- <div class="row">
                     <div class="input-field  col m12 s10 ">
                       <input required  id="nama" type="text"  name="teks" value="{{$telegram_settings->teks}}">
                       <label for="nama">Teks Reminder</label>
                     </div>
-                  </div>
+                  </div> --}}
 
                   <div class="row">
                       <div class="input-field offset-s12">

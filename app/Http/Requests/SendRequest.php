@@ -28,7 +28,7 @@ class SendRequest extends FormRequest
     public function rules()
     {
         return [
-          'subject'  => 'required|max:30',
+          'subject'  => 'required|max:60',
           'pesan' => 'required|max:250',
           'lampiran' => 'mimes:jpg,png,pdf,rar|max:1500'
         ];

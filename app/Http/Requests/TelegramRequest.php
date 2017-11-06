@@ -30,7 +30,7 @@ class TelegramRequest extends FormRequest
     {
         return [
           'chat_id' => 'required|numeric|digits_between:1,11',
-          'teks' => 'required|max:50',
+          // 'teks' => 'required|max:50',
         ];
     }
 
@@ -40,8 +40,8 @@ class TelegramRequest extends FormRequest
           'chat_id.required' => 'Chat ID harus diisi!',
           'chat_id.numeric' => 'Chat ID hanya boleh angka',
           'chat_id.digits_between' => 'Chat ID maksimal 11 digit',
-          'teks.required' => 'teks harus diisi!',
-          'teks.max' => 'teks maksimal 50 karakter',
+          // 'teks.required' => 'teks harus diisi!',
+          // 'teks.max' => 'teks maksimal 50 karakter',
         ];
     }
 }

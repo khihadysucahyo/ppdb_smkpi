@@ -2,6 +2,7 @@
 
 @section('konten')
 
+  <h5><b><u>Daftar Peserta Periode Pendaftaran {{$periode->periode}}</u></b></h5>
   <table class="striped responsive-table">
      <thead>
        <tr>

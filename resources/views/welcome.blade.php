@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('konten')
-
 {{--
     @if (Auth::user()->role==2)
       <div class="row">

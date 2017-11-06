@@ -6,6 +6,7 @@ use View;
 use App\User;
 use App\Models\Info;
 use App\Models\Sekolah;
+use App\Models\Periode;
 use App\Models\Pengaturan;
 use Illuminate\Http\Request;
 
@@ -14,8 +15,10 @@ class PublicController extends Controller
 {
   public function __construct()
   {
+      $periode    = Periode::join('pengaturans','pengaturans.periode_id','=','periode.id')->get()->first();
       $pengaturan = Pengaturan::get()->first(); //its just a dummy data object.
       View::share('pengaturan', $pengaturan); // Sharing is caring
+      View::share('periode', $periode); // Sharing is caring
   }
 
   public function index()
@@ -25,7 +28,8 @@ class PublicController extends Controller
 
   public function list_peserta()
   {
-      $users = User::Where('role','<>',2)->paginate(7);
+      $pengaturan = Pengaturan::get()->first();
+      $users = User::join('profiles', 'profiles.user_id','=','users.id')->Where('role',1)->where('profiles.periode_id', $pengaturan->pluck('periode_id'))->paginate(7);
       return view('public.list_peserta', compact('users'));
   }
 

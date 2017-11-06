@@ -7,7 +7,7 @@ use MyLib;
 use App\Models\Profile;
 use App\Models\Sekolah;
 use App\Models\Pengaturan;
-use App\Models\Tahun_Ajaran;
+use App\Models\Periode;
 use Illuminate\Http\Request;
 use App\Models\Telegram_Settings;
 use App\Http\Requests\SekolahRequest;
@@ -60,10 +60,10 @@ class SekolahController extends Controller
 
   public function pengaturan()
   {
-      $tahun_ajaran = Tahun_Ajaran::all();
+      $periode  = Periode::all();
       $telegram_settings = Telegram_Settings::get()->first();
       $pengaturan = Pengaturan::get()->first();
-      return view('pengaturan.pengaturan', ['profile'=>MyLib::getProfile()], compact('tahun_ajaran', 'pengaturan', 'telegram_settings'));
+      return view('pengaturan.pengaturan', ['profile'=>MyLib::getProfile()], compact('periode', 'pengaturan', 'telegram_settings'));
   }
 
   public function pengaturan_update(Request $request)
@@ -71,7 +71,7 @@ class SekolahController extends Controller
       $buka_pendaftaran=($request->buka_pendaftaran==null) ? 1 : 0;
       $tampil_kelulusan=($request->tampil_hasil_kelulusan==null) ? 1 : 0;
       Pengaturan::find(1)->update([
-        'tahun_ajaran'=>$request->tahun_ajaran,
+        'periode_id'=>$request->periode_id,
         'buka_pendaftaran'=>$buka_pendaftaran,
         'tampil_hasil_kelulusan'=>$tampil_kelulusan,
       ]);
@@ -82,7 +82,6 @@ class SekolahController extends Controller
   {
       Telegram_Settings::find(1)->update([
         'chat_id'=>$request->chat_id,
-        'teks'=>$request->teks,
       ]);
       return redirect()->back()->with('message','Pengaturan Telegram berhasil disimpan!');
   }

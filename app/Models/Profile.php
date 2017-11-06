@@ -17,8 +17,8 @@ class Profile extends Model
         return $this->belongsTo('App\Models\Tahun');
     }
 
-    public function Tahun_Ajaran(){
-        return $this->belongsTo('App\Models\Tahun_Ajaran', 'tahun_ajaran', 'id');
+    public function Periode(){
+        return $this->belongsTo('App\Models\Periode', 'Periode', 'id');
     }
 
     public function Pekerjaan(){

@@ -81,7 +81,13 @@
           <div class="card-content">
             <div class="card-title left-align indigo-text"><strong>Tulis pesan</strong></div>
             <div class="card-action ">
-
+              @if ($errors->any())
+                <div class="col s12 z-depth-1 #ffebee red lighten-5 red-text" style="border-radius:5px; padding:5px;">
+                @foreach ($errors->all() as $err)
+                    <li>{{$err}}</li>
+                @endforeach
+              </div><br>
+              @endif
               <form class="form-horizontal" role="form" method="post" action="/pesan_admin" enctype="multipart/form-data">{{ csrf_field() }}
                   <div class="input-field col s12 m6">
                     <select class="icons" name="userid">
@@ -124,7 +130,7 @@
                       </div>
                   </div>
               </form>
-              
+
             </div>
           </div>
         </div>
