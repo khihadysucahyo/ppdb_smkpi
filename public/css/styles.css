@@ -1,0 +1,42 @@
+html {
+   font-family: GillSans, Calibri, Trebuchet, sans-serif;
+ }
+
+.putih-text li a{
+  color: white;
+ }
+
+input.border-input{
+  background-color: rgba(255,255,255,0.9);
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #f2f2f2;
+  border-radius: 2px;
+  height: 2.1rem;
+}
+ /* label focus color */
+   /*.input-field input[type=text]:focus + label {
+     color: #000;
+}*/
+/* label underline focus color */
+   /*.input-field input[type=text]:focus {
+     border-bottom: 1px solid #000;
+     box-shadow: 0 1px 0 0 #000;
+   }*/
+ /*dashboard*/
+ /*input[type="text"]:disabled{color:grey;}
+ input[type="text"]:disabled+label{color: #ababab;}
+ input[type="text"]+label{color: #787878;}
+ input[type="radio"]:disabled{color:grey;}
+ input[type="radio"]:disabled+label{color: #ababab;}
+ input[type="radio"]+label{color: #787878;}*/
+ #toast-container {
+   top: auto !important;
+   right: auto !important;
+   bottom: 91.5%;
+   left:43%;
+ }
+
+#isi_info.materialize-textarea{height: 6rem;}
+
+/**/
