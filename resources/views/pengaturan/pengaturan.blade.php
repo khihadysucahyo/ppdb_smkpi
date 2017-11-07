@@ -1,6 +1,27 @@
 @extends('layouts.dash_admin')
 
 @section('konten')
+{{-- Modal Upload --}}
+<div id="addPeriode" class="modal offset-l5 col s9 m9 l3">
+  <div class="center-align modal-content">
+    <form class="form-horizontal" role="form" method="post" action="../pengaturan/tambahperiode">{{ csrf_field() }}
+      <center><b>Tambah Periode Pendaftaran Baru?<br><h5>{{$periode->last()->periode+1}}</h5></b></center>
+      <input type="hidden" name="periode" value="{{$periode->last()->periode+1}}">
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="modal-action waves-effect waves-green btn-flat" name="upload">
+      <i class="material-icons left">add</i>tambah</a>
+    </button>
+    <button type="reset" class="modal-action modal-close waves-effect waves-green btn-flat" name="reset">
+      <i class="material-icons left">close</i>Cancel</a>
+    </button>
+  </form>
+  </div>
+</div>
+{{-- End Modal --}}
+
+
+
 
 <div class="col s12 m12 l9">
 
@@ -13,7 +34,7 @@
             <div class="card-action ">
               <form class="form-horizontal" role="form" method="post" action="pengaturan">
                   {{ csrf_field() }}
-                  <a href="#" class="teal-text"><i class="material-icons left">add</i>Tambah Periode Tahun Ajaran</a>
+                  <a href="#addPeriode" class="teal-text"><i class="material-icons left">add</i>Tambah Periode Baru</a>
                   <div class="row">
                     <div class="input-field col m3 s12 ">
                       <select name="periode_id" required >

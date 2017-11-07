@@ -64,6 +64,7 @@ Route::group(['middleware'=>'admin'], function(){
     Route::get('pengaturan', 'SekolahController@pengaturan');
     Route::post('pengaturan', 'SekolahController@pengaturan_update');
     Route::post('pengaturan_telegram', 'SekolahController@pengaturan_update_telegram');
+    Route::post('pengaturan/tambahperiode', 'SekolahController@tambah_periode');
 });
 
 Route::group(['middleware'=>'auth'], function(){

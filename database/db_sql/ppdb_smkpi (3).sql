@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2017 at 07:03 PM
+-- Generation Time: Nov 07, 2017 at 08:42 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 7.0.4
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ppdb_online`
+-- Database: `ppdb_smkpi`
 --
 
 -- --------------------------------------------------------
@@ -73,10 +73,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `nilais` (
   `user_id` int(3) NOT NULL,
-  `matematika` float NOT NULL,
-  `ipa` float NOT NULL,
-  `bahasa_indonesia` float NOT NULL,
-  `bahasa_inggris` float NOT NULL,
+  `matematika` float DEFAULT NULL,
+  `ipa` float DEFAULT NULL,
+  `bahasa_indonesia` float DEFAULT NULL,
+  `bahasa_inggris` float DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -87,7 +87,7 @@ CREATE TABLE `nilais` (
 
 INSERT INTO `nilais` (`user_id`, `matematika`, `ipa`, `bahasa_indonesia`, `bahasa_inggris`, `created_at`, `updated_at`) VALUES
 (15, 80, 80, 80, 80, '2017-04-28 13:35:35', '2017-04-28 06:35:35'),
-(16, 0, 0, 0, 0, '2017-04-28 10:00:42', NULL),
+(16, 77, 90, 80, 90, '2017-04-28 10:00:42', '2017-11-02 03:50:48'),
 (19, 0, 0, 0, 0, '2017-04-28 10:10:04', NULL),
 (22, 0, 0, 0, 0, '2017-04-28 10:12:01', NULL),
 (25, 0, 0, 0, 0, '2017-04-28 10:13:49', NULL),
@@ -111,7 +111,11 @@ INSERT INTO `nilais` (`user_id`, `matematika`, `ipa`, `bahasa_indonesia`, `bahas
 (44, 0, 0, 0, 0, '2017-04-28 10:29:10', NULL),
 (45, 0, 0, 0, 0, '2017-04-28 10:30:19', NULL),
 (61, 0, 0, 0, 0, '2017-09-01 13:10:32', NULL),
-(64, 70, 75, 85, 80, '2017-10-19 18:24:32', '2017-10-24 11:58:22');
+(64, 70, 75, 85, 80, '2017-10-19 18:24:32', '2017-10-24 11:58:22'),
+(69, 70, 75, 80, 90, '2017-11-02 02:39:23', '2017-11-02 02:54:24'),
+(70, NULL, NULL, NULL, NULL, '2017-11-02 05:24:56', NULL),
+(71, 80, 80, 90, 86, '2017-11-06 14:43:15', '2017-11-06 15:45:13'),
+(73, NULL, NULL, NULL, NULL, '2017-11-07 15:21:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -130,8 +134,8 @@ CREATE TABLE `password_resets` (
 --
 
 INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
-('khihady.ks@gmail.com', '$2y$10$kkHZDh7niC8y8wG3oOrwEeIcOxkLij2plp7NhiwmxdzngCw1XH8B2', '2017-10-22 12:29:03'),
-('asem@gmail.com', '$2y$10$RYsEjYO.v5tTX72sqjhxf.gkEmgXBuglMzWVsp0sUsrTmT24TWOe.', '2017-10-22 12:53:06');
+('asem@gmail.com', '$2y$10$RYsEjYO.v5tTX72sqjhxf.gkEmgXBuglMzWVsp0sUsrTmT24TWOe.', '2017-10-22 12:53:06'),
+('khihady.ks@gmail.com', '$2y$10$0kQ5csJRYYrEwMUgVAmpJelDybCJl5zFx5cFUiSfVvpa6jSXO5OAe', '2017-11-02 05:34:48');
 
 -- --------------------------------------------------------
 
@@ -162,7 +166,7 @@ INSERT INTO `pekerjaans` (`id`, `nama_pekerjaan`) VALUES
 
 CREATE TABLE `pengaturans` (
   `id` int(11) NOT NULL,
-  `tahun_ajaran` int(11) NOT NULL,
+  `periode_id` tinyint(2) NOT NULL,
   `buka_pendaftaran` tinyint(1) NOT NULL DEFAULT '1',
   `tampil_hasil_kelulusan` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -171,8 +175,38 @@ CREATE TABLE `pengaturans` (
 -- Dumping data for table `pengaturans`
 --
 
-INSERT INTO `pengaturans` (`id`, `tahun_ajaran`, `buka_pendaftaran`, `tampil_hasil_kelulusan`) VALUES
-(1, 2, 0, 0);
+INSERT INTO `pengaturans` (`id`, `periode_id`, `buka_pendaftaran`, `tampil_hasil_kelulusan`) VALUES
+(1, 4, 0, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `periode`
+--
+
+CREATE TABLE `periode` (
+  `id` tinyint(2) NOT NULL,
+  `periode` year(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `periode`
+--
+
+INSERT INTO `periode` (`id`, `periode`) VALUES
+(1, 2016),
+(2, 2017),
+(4, 2018);
+
+--
+-- Triggers `periode`
+--
+DELIMITER $$
+CREATE TRIGGER `setPengaturan_setelahNambahPeriode` AFTER INSERT ON `periode` FOR EACH ROW BEGIN
+	UPDATE pengaturans set periode_id=new.id WHERE id=1;
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -184,7 +218,7 @@ CREATE TABLE `pesans` (
   `id_pesan` int(4) NOT NULL,
   `id_peserta` int(3) DEFAULT NULL,
   `id_admin` int(3) DEFAULT NULL,
-  `subjek` varchar(30) DEFAULT NULL,
+  `subjek` varchar(60) DEFAULT NULL,
   `pesan_teks` text,
   `lampiran` varchar(40) DEFAULT NULL,
   `pengirim` enum('admin','peserta','','') DEFAULT NULL,
@@ -222,7 +256,33 @@ INSERT INTO `pesans` (`id_pesan`, `id_peserta`, `id_admin`, `subjek`, `pesan_tek
 (40, 62, 61, 'Lengkapi Biodata!', 'Segara lengkapi Biodata Anda, Terimakasih :)', NULL, 'admin', NULL, '2017-10-24 12:09:15'),
 (41, 64, 61, 'Lengkapi Biodata!', 'Segera Lengkapi biodata anda, termaikasih :)', NULL, 'admin', NULL, '2017-10-24 12:10:17'),
 (42, 64, NULL, 'REPLY[#41]', 'Siapp min!', NULL, 'peserta', 'reply', '2017-10-24 12:11:51'),
-(43, 64, 61, 'Perihal Ijazah', 'Ijazah dapat diserahkan langsung atau bisa juga dikirim melalui jasa pengiriman,\r\nTerimakasih.', NULL, 'admin', NULL, '2017-10-25 05:28:58');
+(43, 64, 61, 'Perihal Ijazah', 'Ijazah dapat diserahkan langsung atau bisa juga dikirim melalui jasa pengiriman,\r\nTerimakasih.', NULL, 'admin', NULL, '2017-10-25 05:28:58'),
+(44, 69, NULL, 'Tes pesan hari H', 'Bertanya?', NULL, 'peserta', NULL, '2017-11-02 05:34:06'),
+(45, 69, NULL, 'Tes di kampus', 'aaaaa', NULL, 'peserta', NULL, '2017-11-02 08:49:15'),
+(46, 69, NULL, 'Tes 2', 'Tes 2', NULL, 'peserta', NULL, '2017-11-02 08:49:38'),
+(47, 69, NULL, 'tes pendadaran', 'sss', NULL, 'peserta', NULL, '2017-11-06 09:17:59'),
+(48, 69, NULL, 'Tes Didadar', 'sssss', NULL, 'peserta', NULL, '2017-11-06 09:19:14'),
+(49, 69, NULL, 'sss', 'sss', NULL, 'peserta', NULL, '2017-11-06 09:20:25'),
+(50, 69, NULL, 'vvv', 'vvvv', NULL, 'peserta', NULL, '2017-11-06 09:20:43'),
+(51, 69, NULL, 'vvv', 'vvvv', NULL, 'peserta', NULL, '2017-11-06 09:20:58'),
+(52, 69, NULL, 'ddd', 'dddd', NULL, 'peserta', NULL, '2017-11-06 09:22:37'),
+(53, 69, NULL, 'dddd', 'dddddd', NULL, 'peserta', NULL, '2017-11-06 09:23:04'),
+(54, 69, NULL, 'Teps', 'ddsdsd', NULL, 'peserta', NULL, '2017-11-06 09:24:55'),
+(55, 69, NULL, 'wkwkwk', 'wkwkkwkwkwksds', NULL, 'peserta', NULL, '2017-11-06 09:25:23'),
+(61, 69, NULL, 'sss', 'sssss', NULL, 'peserta', NULL, '2017-11-06 11:36:35'),
+(62, 69, NULL, 'ddd', 'dddd', NULL, 'peserta', NULL, '2017-11-06 11:37:38'),
+(63, 69, NULL, 'ddd', 'dddd', NULL, 'peserta', NULL, '2017-11-06 11:39:13'),
+(64, 69, NULL, 'ddd', 'dddd', NULL, 'peserta', NULL, '2017-11-06 11:44:53'),
+(65, 69, NULL, 'fff', 'ffff', NULL, 'peserta', NULL, '2017-11-06 11:45:01'),
+(66, 69, NULL, 'dd', 'ddd', NULL, 'peserta', NULL, '2017-11-06 11:46:16'),
+(67, 69, NULL, 'ddddd', 'ddddd', NULL, 'peserta', NULL, '2017-11-06 11:47:22'),
+(68, 69, NULL, 'kkk', 'kkkkk', NULL, 'peserta', NULL, '2017-11-06 11:49:45'),
+(69, 69, NULL, 'aahahah', 'ahahaha', NULL, 'peserta', NULL, '2017-11-06 11:51:29'),
+(70, 69, NULL, 'Tes smkp1', 'haloo', NULL, 'peserta', NULL, '2017-11-06 14:32:13'),
+(71, 71, NULL, 'Masalah Verifikasi', 'Sudah Mengirim  berkas tapi belum diverifikasi?', NULL, 'peserta', NULL, '2017-11-06 15:48:30'),
+(72, 71, 61, 'REPLY[#71]__SUBJECT[Masalah Verifikasi]', 'Maaf verifikasi memang belum kami proses, ikuti terus informasi terbaru ya di web ini, terimakasih :)', NULL, 'admin', 'reply', '2017-11-06 16:02:49'),
+(73, 71, 61, 'REPLY[#72]__SUBJECT[REPLY[#71]__SUBJECT[Masalah Verifikasi]]', 'ddd', NULL, 'admin', 'reply', '2017-11-06 16:05:04'),
+(74, 71, 61, 'Sudah Diverifikasi', 'Tes', NULL, 'admin', NULL, '2017-11-06 17:18:24');
 
 -- --------------------------------------------------------
 
@@ -235,13 +295,13 @@ CREATE TABLE `profiles` (
   `no_peserta` varchar(7) DEFAULT NULL,
   `nama` varchar(40) NOT NULL,
   `tempat_lahir` varchar(20) NOT NULL,
-  `tanggal_lahir` date NOT NULL,
+  `tanggal_lahir` date DEFAULT NULL,
   `jenis_kelamin` enum('laki-laki','perempuan','','') DEFAULT NULL,
   `gol_darah` varchar(2) NOT NULL,
-  `berat_badan` int(3) NOT NULL,
-  `tinggi_badan` int(3) NOT NULL,
+  `berat_badan` int(3) DEFAULT NULL,
+  `tinggi_badan` int(3) DEFAULT NULL,
   `alamat` text NOT NULL,
-  `agama` enum('islam','kristen','buddha','hindu') DEFAULT NULL,
+  `agama` enum('','islam','kristen','buddha','hindu') DEFAULT '',
   `asal_sekolah` varchar(40) NOT NULL,
   `alamat_sekolah` text NOT NULL,
   `tahun_id` tinyint(2) NOT NULL,
@@ -253,11 +313,11 @@ CREATE TABLE `profiles` (
   `pekerjaan_ibu` tinyint(1) NOT NULL,
   `alamat_ortu` text NOT NULL,
   `lampiran` varchar(40) NOT NULL,
-  `foto` varchar(40) NOT NULL,
+  `foto` varchar(40) DEFAULT NULL,
   `status_biodata` enum('Belum Lengkap','Lengkap','','') DEFAULT 'Belum Lengkap',
   `status_verifikasi` enum('Belum Diverifikasi','Terverifikasi','','') NOT NULL DEFAULT 'Belum Diverifikasi',
   `status_diterima` enum('Lulus','Tidak Lulus','','') NOT NULL DEFAULT 'Tidak Lulus',
-  `tahun_ajaran` tinyint(4) NOT NULL,
+  `periode_id` tinyint(2) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -266,33 +326,36 @@ CREATE TABLE `profiles` (
 -- Dumping data for table `profiles`
 --
 
-INSERT INTO `profiles` (`user_id`, `no_peserta`, `nama`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `gol_darah`, `berat_badan`, `tinggi_badan`, `alamat`, `agama`, `asal_sekolah`, `alamat_sekolah`, `tahun_id`, `no_hp`, `nama_ayah`, `nama_ibu`, `no_ortu`, `pekerjaan_ayah`, `pekerjaan_ibu`, `alamat_ortu`, `lampiran`, `foto`, `status_biodata`, `status_verifikasi`, `status_diterima`, `tahun_ajaran`, `created_at`, `updated_at`) VALUES
+INSERT INTO `profiles` (`user_id`, `no_peserta`, `nama`, `tempat_lahir`, `tanggal_lahir`, `jenis_kelamin`, `gol_darah`, `berat_badan`, `tinggi_badan`, `alamat`, `agama`, `asal_sekolah`, `alamat_sekolah`, `tahun_id`, `no_hp`, `nama_ayah`, `nama_ibu`, `no_ortu`, `pekerjaan_ayah`, `pekerjaan_ibu`, `alamat_ortu`, `lampiran`, `foto`, `status_biodata`, `status_verifikasi`, `status_diterima`, `periode_id`, `created_at`, `updated_at`) VALUES
 (15, 'REG015', 'Muhammad Ramzy Raihan', '', '0000-00-00', 'laki-laki', '', 70, 170, 'Sebengkok no.5', 'islam', 'SMP 4 Tarakan', '', 3, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', '2017-04-28 06:35:35'),
-(16, 'REG016', 'Agus Dwi Maulana', '', '0000-00-00', NULL, '', 0, 0, '', NULL, '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Lulus', 2, '2017-10-24 04:19:51', '2017-10-30 17:54:13'),
-(19, 'REG019', 'Putri Wulandari', '', '0000-00-00', NULL, '', 0, 0, '', NULL, '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 17:58:04'),
+(16, 'REG016', 'Agus Dwi Maulana', 'Tarakan', '1997-06-08', 'laki-laki', 'A', 60, 168, 'Jl Mulawarman Tarakan Timur, Kalimantan Utara', 'islam', 'SMPN 1 Tarakan', 'Jl Sebengkok Tarakan Timur', 3, '09778966579', 'Sutejo', 'Mariem', '09977542899', 4, 4, 'Jl Mulawarman', '', '1509599766_Logo-Smansata.png', 'Lengkap', 'Terverifikasi', 'Lulus', 2, '2017-10-24 04:19:51', '2017-11-02 05:16:06'),
+(19, 'REG019', 'Putri Wulandari', '', '0000-00-00', 'perempuan', '', 0, 0, '', '', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 17:58:04'),
 (22, 'REG022', 'Javeen Raynaldo', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'buddha', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 18:03:01'),
-(25, 'REG025', 'Laila Purnama Dewi', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 18:02:42'),
-(26, 'REG026', 'Martinus Gesiata Lamarian', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 18:03:01'),
-(28, 'REG028', 'Fransiska Winda Achi', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 18:03:01'),
+(25, 'REG025', 'Laila Purnama Dewi', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 18:02:42'),
+(26, 'REG026', 'Martinus Gesiata Lamarian', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 18:03:01'),
+(28, 'REG028', 'Fransiska Winda Achi', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Terverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 18:03:01'),
 (29, 'REG029', 'Muhammad Aidil Fitrah', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
 (30, 'REG030', 'Febryan Saputra', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 2, '2017-10-24 00:11:28', '2017-10-20 11:51:21'),
-(31, 'REG031', 'Fidar Pratiwi', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(31, 'REG031', 'Fidar Pratiwi', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
 (32, 'REG032', 'Anang Adenansi', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Lulus', 1, '2017-10-24 00:11:28', '2017-10-20 11:55:34'),
 (33, 'REG033', 'Amelia Ananda', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
 (34, 'REG034', 'Muhammad Wili Azzam', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(35, 'REG035', 'Ghina Nazlifa Hesna', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(35, 'REG035', 'Ghina Nazlifa Hesna', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
 (36, 'REG036', 'Wahyuniarsih', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(37, 'REG037', 'Nadira Gustina', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(38, 'REG038', 'Nuradlina', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(39, 'REG039', 'Ludia Prasasty', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(40, 'REG040', 'Purnama Tya', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(41, 'REG041', 'Vira Dhamara', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(42, 'REG042', 'Disella Erangga', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(43, 'REG043', 'Riski Amelia Sari', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
-(44, 'REG044', 'Anin Sapitri', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(37, 'REG037', 'Nadira Gustina', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(38, 'REG038', 'Nuradlina', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(39, 'REG039', 'Ludia Prasasty', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(40, 'REG040', 'Purnama Tya', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(41, 'REG041', 'Vira Dhamara', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(42, 'REG042', 'Disella Erangga', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(43, 'REG043', 'Riski Amelia Sari', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
+(44, 'REG044', 'Anin Sapitri', '', '0000-00-00', 'perempuan', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', NULL),
 (45, 'REG045', 'Khirana Dwicahyo', '', '0000-00-00', 'laki-laki', '', 0, 0, '', 'islam', '', '', 0, '', '', '', '0', 0, 0, '', '', '', 'Belum Lengkap', 'Belum Diverifikasi', 'Lulus', 1, '2017-10-24 00:11:28', '2017-10-25 04:11:20'),
-(61, 'REG061', 'asem', '', '0000-00-00', NULL, '', 0, 0, '', NULL, 'sekolah', '', 0, '', '', '', '0', 0, 0, '', '', '1509344774_unisa.png', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', '2017-10-30 06:26:14'),
-(64, 'REG064', 'Khihady Sucahyo', 'Tarakan', '1996-06-05', 'laki-laki', 'B', 55, 157, 'Mancasan Kidul Jl jodipati 149A', 'islam', 'SMP Al-Azhar Samarinda', 'Jl.Mulawarman Sempaja Samarinda', 4, '085346361613', 'Adi Priyanto', 'Marsini', '085346361613', 1, 4, 'Jl Raden Abdullah No.25 Pangkalpinang. Kep. Bangka Belitung.', '', '1507561957_Pas-Photo23.jpg', 'Lengkap', 'Belum Diverifikasi', 'Lulus', 1, '2017-10-24 00:11:28', '2017-10-24 12:31:39');
+(61, 'REG061', 'asem', '', '0000-00-00', NULL, '', 0, 0, '', NULL, 'sekolah', '', 0, '', '', '', '0', 0, 0, '', '', '1509979255_unisa.png', 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 1, '2017-10-24 00:11:28', '2017-11-06 14:40:55'),
+(64, 'REG064', 'Khihady Sucahyo', 'Tarakan', '1996-06-05', 'laki-laki', 'B', 55, 157, 'Mancasan Kidul Jl jodipati 149A', 'islam', 'SMP Al-Azhar Samarinda', 'Jl.Mulawarman Sempaja Samarinda', 4, '085346361613', 'Adi Priyanto', 'Marsini', '085346361613', 1, 4, 'Jl Raden Abdullah No.25 Pangkalpinang. Kep. Bangka Belitung.', '', '1507561957_Pas-Photo23.jpg', 'Lengkap', 'Belum Diverifikasi', 'Lulus', 1, '2017-10-24 00:11:28', '2017-10-24 12:31:39'),
+(69, 'REG069', 'Khihady Sucahyo', 'Tarakan', '1996-06-05', 'laki-laki', 'B', 45, 157, 'Jl. Jodipati No 149A Mancasan Kidul, Condong Catur , Sleman 55283', 'islam', 'SMP AL-AZHAR SYIFA BUDI SAMARINDA', 'JL. Mulawarman Gg Merah, Sempaja, Samarinda, Kalimantan Timur.', 3, '085346361613', 'Adi Priyanto', 'Marsini', '085929545424', 1, 4, 'Kantor Imigrasi Kelas 1 Kota Pangkalpinang, Kepulauan Bangka Belitung.', '', '1509592242_Pas-Photo23.jpg', 'Lengkap', 'Terverifikasi', 'Tidak Lulus', 2, '2017-11-02 02:39:23', '2017-11-02 03:12:03'),
+(70, 'REG070', 'Admin 2', '', NULL, NULL, '', NULL, NULL, '', NULL, '', '', 0, '', '', '', '', 0, 0, '', '', NULL, 'Belum Lengkap', 'Belum Diverifikasi', 'Tidak Lulus', 2, '2017-11-02 05:24:56', NULL),
+(71, 'REG071', 'Mohammad Salah', 'Aceh', '1997-08-09', 'laki-laki', 'A', 70, 165, 'aceh selatan no 2', 'hindu', 'SMP Tunas Cherry', 'aceh selatan no.2', 4, '0977862257', 'Joni', 'Marselo', '0988887286', 1, 4, 'aceh selatan no.2', '', '1509979859_logolidi.jpeg', 'Lengkap', 'Terverifikasi', 'Lulus', 2, '2017-11-06 14:43:15', '2017-11-06 15:47:29');
 
 -- --------------------------------------------------------
 
@@ -343,40 +406,20 @@ INSERT INTO `tahuns` (`id`, `tahun`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tahun_ajaran`
---
-
-CREATE TABLE `tahun_ajaran` (
-  `id` tinyint(4) NOT NULL,
-  `tahun_ajaran` varchar(9) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tahun_ajaran`
---
-
-INSERT INTO `tahun_ajaran` (`id`, `tahun_ajaran`) VALUES
-(1, '2016/2017'),
-(2, '2017/2018');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `telegram_settings`
 --
 
 CREATE TABLE `telegram_settings` (
-  `id` tinyint(11) NOT NULL,
-  `chat_id` int(11) NOT NULL,
-  `teks` varchar(50) NOT NULL
+  `id` tinyint(1) NOT NULL,
+  `chat_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `telegram_settings`
 --
 
-INSERT INTO `telegram_settings` (`id`, `chat_id`, `teks`) VALUES
-(1, 410626437, 'Anda memiliki pesan yang harus dijawab!');
+INSERT INTO `telegram_settings` (`id`, `chat_id`) VALUES
+(1, 410626437);
 
 -- --------------------------------------------------------
 
@@ -424,8 +467,12 @@ INSERT INTO `users` (`id`, `name`, `email`, `role`, `password`, `remember_token`
 (43, 'Riski Amelia Sari', 'sari.amelia@gmail.com', 1, '$2y$10$GlxPHiI', 'WDdfwBX8f7b0bwCMzBPYSyZHejZyt0MXMmXwXhitTipQN53aP1D6VfjLVd1o', '2017-04-28 03:28:44', '2017-04-28 03:28:44'),
 (44, 'Anin Sapitri', 'sapitri.anin@gmail.com', 1, '$2y$10$COHnvwm', 'VHVWfCHLFue56B5GAe6tfAvjrfcvvR4lFjBYvSLUBoi2vgjmaTcHRYzPgmg0', '2017-04-28 03:29:10', '2017-04-28 03:29:10'),
 (45, 'Khirana Dwicahyo', 'dwicahyo.khirana@gmail.com', 1, '$2y$10$Q5vzs03', '2F41g7xtZZiOceR3sSpi5dYvRN81AuXTF485kmV7pnV1CnmEd0M42uAqVAi1', '2017-04-28 03:30:19', '2017-04-28 03:30:19'),
-(61, 'Fida', 'asem@gmail.com', 2, '$2y$10$/wSPnravWpGSq6ppTB5opOPLalQZYIyMy4aKJ1wVLtMoB11cGkafG', '1xc77Q71BU9Xb5s567omvmeUUWu4QiA2ny4q3kz8y0LMupQ25kY3qX2ZfeYO', '2017-09-01 13:10:32', '2017-09-01 13:10:32'),
-(64, 'Khihady Sucahyo', 'mohsalah@gmail.com', 1, '$2y$10$c1KGB1KA8F1BvPccx7UWIe4kWac1LoEBK85ju6uekh905f0.0O/x6', 'e1ar58DWUTCdMfKBe9GJvvyzWUxWjqWG15juRHktfm8zd5YBwhAnTS9QSVvc', '2017-10-09 15:03:02', '2017-10-09 15:03:02');
+(61, 'Admin Satu', 'admin@gmail.com', 2, '$2y$10$/wSPnravWpGSq6ppTB5opOPLalQZYIyMy4aKJ1wVLtMoB11cGkafG', '1xc77Q71BU9Xb5s567omvmeUUWu4QiA2ny4q3kz8y0LMupQ25kY3qX2ZfeYO', '2017-09-01 13:10:32', '2017-09-01 13:10:32'),
+(64, 'Khihady Sucahyo', 'mohsalah@gmail.com', 1, '$2y$10$c1KGB1KA8F1BvPccx7UWIe4kWac1LoEBK85ju6uekh905f0.0O/x6', 'e1ar58DWUTCdMfKBe9GJvvyzWUxWjqWG15juRHktfm8zd5YBwhAnTS9QSVvc', '2017-10-09 15:03:02', '2017-10-09 15:03:02'),
+(69, 'Khihady Sucahyo', 'khihady.ks@gmail.com', 1, '$2y$10$/mhg0.7l65RsUXV2i.dUyO3NfOFtpzhsKhuAPoSLF0F3bbIsjXO/2', 'Y7jbuWgxNqGiR27ThnfWxSveGK4rud3bBsYLuWGdXrL1oO3JvVFkeg53IXJI', '2017-11-02 02:39:23', '2017-11-02 02:39:23'),
+(70, 'Admin 2', 'admin2@gmail.com', 2, '$2y$10$Xx0IMWOR90AeXKfq5yreCOghteiqv9ug5RXU4eyvDD3cTUDEXXz9y', NULL, '2017-11-02 05:24:56', '2017-11-02 05:24:56'),
+(71, 'Mohammad Salah', 'tokogratiss.id@gmail.com', 1, '$2y$10$y7tH4dE/dqYKUi5HnQbpNOSR7xLaIwO4yDoMZIaHJyqEYSL8aOcHq', NULL, '2017-11-06 14:43:15', '2017-11-06 14:43:15'),
+(73, 'Angkatan 2018', 'angkatan2018@gmail.com', 1, '$2y$10$uv5WztpLsbZlWXvbDUouw.q2cNg4h8ILTVFthYy8IDQp48Pa0deMq', NULL, '2017-11-07 15:21:13', '2017-11-07 15:21:13');
 
 --
 -- Triggers `users`
@@ -439,9 +486,9 @@ $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `trigger_insert_auto` AFTER INSERT ON `users` FOR EACH ROW BEGIN
-DECLARE ta Tinyint(4);
-SELECT tahun_ajaran INTO ta FROM pengaturans WHERE id=1;
-  	INSERT INTO profiles (user_id,no_peserta,nama,tahun_ajaran) VALUES (new.id,concat('REG0',new.id),new.name,ta);
+DECLARE var_periode Tinyint(4);
+SELECT periode_id INTO var_periode FROM pengaturans WHERE id=1;
+  	INSERT INTO profiles (user_id,no_peserta,nama,periode_id) VALUES (new.id,concat('REG0',new.id),new.name,var_periode);
     insert INTO nilais (user_id) VALUES (new.id);
 END
 $$
@@ -488,6 +535,13 @@ ALTER TABLE `pengaturans`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `periode`
+--
+ALTER TABLE `periode`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `tahun_ajaran` (`periode`);
+
+--
 -- Indexes for table `pesans`
 --
 ALTER TABLE `pesans`
@@ -511,13 +565,6 @@ ALTER TABLE `sekolah_profiles`
 --
 ALTER TABLE `tahuns`
   ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tahun_ajaran`
---
-ALTER TABLE `tahun_ajaran`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `tahun_ajaran` (`tahun_ajaran`);
 
 --
 -- Indexes for table `telegram_settings`
@@ -552,10 +599,15 @@ ALTER TABLE `migrations`
 ALTER TABLE `pekerjaans`
   MODIFY `id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `periode`
+--
+ALTER TABLE `periode`
+  MODIFY `id` tinyint(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
 -- AUTO_INCREMENT for table `pesans`
 --
 ALTER TABLE `pesans`
-  MODIFY `id_pesan` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `id_pesan` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 --
 -- AUTO_INCREMENT for table `sekolah_profiles`
 --
@@ -567,15 +619,10 @@ ALTER TABLE `sekolah_profiles`
 ALTER TABLE `tahuns`
   MODIFY `id` tinyint(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- AUTO_INCREMENT for table `tahun_ajaran`
---
-ALTER TABLE `tahun_ajaran`
-  MODIFY `id` tinyint(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
---
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

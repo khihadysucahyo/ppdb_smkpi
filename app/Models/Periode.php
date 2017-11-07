@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Periode extends Model
-{
+{   
     protected $guarded = ['id'];
     protected $table = 'periode';
     public $timestamps = false;

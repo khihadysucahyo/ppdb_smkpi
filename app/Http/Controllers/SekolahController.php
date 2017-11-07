@@ -86,6 +86,13 @@ class SekolahController extends Controller
       return redirect()->back()->with('message','Pengaturan Telegram berhasil disimpan!');
   }
 
+  public function tambah_periode(Request $request)
+  {
+      Periode::create([
+        'periode'=>$request->periode,
+      ]);
+      return redirect()->back()->with('message', "Periode pendaftaran tahun $request->periode berhasil ditambahkan!");
+  }
 
   // public function pengaturan_telegramBot()
   // {

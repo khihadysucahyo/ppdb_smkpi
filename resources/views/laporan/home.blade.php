@@ -28,8 +28,8 @@
                   <div id="div_ta" style="display:none;" class="input-field col m3 s12 ">
                     <select name="tahun_ajaran" required >
                       <option  disabled selected>Pilih salah satu</option>
-                      @foreach ($tahun_ajaran as $th)
-                        <option value="{{$th->id}}">{{$th->tahun_ajaran}}</option>
+                      @foreach ($periode as $periode_)
+                        <option value="{{$periode_->id}}">{{$periode_->tahun_ajaran}}</option>
                       @endforeach
                     </select>
                     <label>Tahun Ajaran</label>
@@ -47,13 +47,29 @@
         </div>
       </div>
 
-      <h4>STATISTIK</h4>
+      <div class="col m5">
+        {!! $chartBio->render() !!}
+      </div>
+      <div class="col m5">
+        {!! $chartKelulusan->render() !!}
+      </div>
+      <div class="col m5">
+        {!! $chart->render() !!}
+      </div>
+      <div class="col m5">
+        {!! $chartAgama->render() !!}
+      </div>
+      <div class="col m5">
+        {!! $dt_pertahun->render() !!}
+      </div>
+
+      {{-- <h4>STATISTIK</h4>
       <center>
           {!! $chart->render() !!}
       </center>
       <center>
           {!! $dt_pertahun->render() !!}
-      </center>
+      </center> --}}
     </div>
 
   </div>
