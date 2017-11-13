@@ -10,9 +10,9 @@
           <div class="card">
             <div class="card-content black white-text">
                 <strong><i class="material-icons left">school</i>SEKOLAH</strong>
-                <a class="waves-effect waves-teal" href="/tentang_sekolah">Tentang Sekolah</a> |
-                <a class="waves-effect waves-teal" href="/visi_misi">Visi&Misi</a> |
-                <a class="waves-effect waves-teal" href="/lokasi">Lokasi</a>
+                <a class="waves-effect waves-teal" href="../tentang_sekolah">Tentang Sekolah</a> |
+                <a class="waves-effect waves-teal" href="../visi_misi">Visi & Misi</a> |
+                <a class="waves-effect waves-teal" href="../lokasi">Lokasi</a>
             </div>
           </div>
           {{-- </a> --}}
@@ -23,15 +23,15 @@
           <div class="card">
             <div class="card-content black white-text">
                 <strong><i class="material-icons left">person</i>USERS</strong>
-                <a class="waves-effect waves-teal" href="/user">Admin</a> |
-                <a class="waves-effect waves-teal" href="/peserta">Peserta</a>
+                <a class="waves-effect waves-teal" href="../admin/user">Admin</a> |
+                <a class="waves-effect waves-teal" href="../peserta">Peserta</a>
             </div>
           </div>
         {{-- </a> --}}
       </div>
 
       <div class="col s5">
-        <a href="/info">
+        <a href="../info">
           <div class="card">
             <div class="card-content black white-text">
                 <strong><i class="material-icons left">info</i>INFORMASI</strong>
@@ -41,7 +41,7 @@
       </div>
 
       <div class="col s5">
-        <a href="/laporan">
+        <a href="../laporan">
           <div class="card">
             <div class="card-content black white-text">
                 <strong><i class="material-icons left">book</i>LAPORAN</strong>
@@ -51,7 +51,7 @@
       </div>
 
       <div class="col s5">
-        <a href="/pesan">
+        <a href="../pesan_admin">
           <div class="card">
             <div class="card-content black white-text">
                 <strong><i class="material-icons left">email</i>Pesan</strong>
@@ -61,7 +61,7 @@
       </div>
 
       <div class="col s5">
-        <a href="/pengaturan">
+        <a href="../pengaturan">
           <div class="card">
             <div class="card-content black white-text">
                 <strong><i class="material-icons left">settings</i>Settings</strong>

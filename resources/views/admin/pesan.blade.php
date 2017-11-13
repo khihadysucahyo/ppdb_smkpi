@@ -1,3 +1,12 @@
+@php
+  // foreach ($users as $user) {
+  //   foreach ($user->profile as $value) {
+  //     echo $value->nama;
+  //   }
+  //   // echo $user->profile->nama;
+  // }
+  // die();
+@endphp
 @extends('layouts.dash_admin')
 
 @section('konten')

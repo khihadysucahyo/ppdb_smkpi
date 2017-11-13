@@ -146,7 +146,7 @@
                         <option {{ ($profile_user->tahun_id==$tahuns->id) ? 'selected' : '_' }} value="{{$tahuns->id}}">{{$tahuns->tahun}}</option>
                       @endforeach
                     </select>
-                    <label>Tahun Lulus SMA/SLTA @if($errors->has('tahun')) <li><span class="{{$notifErr}}">{{$errors->first('tahun')}}</span></li> @endif</label>
+                    <label>Tahun Lulus SMP/SLTP @if($errors->has('tahun')) <li><span class="{{$notifErr}}">{{$errors->first('tahun')}}</span></li> @endif</label>
                   </div>
                 </div>
 

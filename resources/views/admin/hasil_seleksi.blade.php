@@ -11,6 +11,7 @@
     <div class="col s12">
       <h4>Hasil Seleksi</h4>
       <hr>
+      <a class="right tooltipped" data-tooltip="cetak bukti diterima" data-position="top" href="/cetakhasilkelulusan"><i class="material-icons">print</i></a>
         <pre>No Peserta     : {{$profile->no_peserta}}</pre>
         <pre>Nama Lengkap   : {{$profile->nama}}</pre>
         <pre>Asal Sekolah   : {{$profile->asal_sekolah}}</pre>

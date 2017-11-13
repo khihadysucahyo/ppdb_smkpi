@@ -29,29 +29,32 @@
         {{--  serach form--}}
         <form class="form-horizontal" role="form" method="get" action="../peserta/filter">
           {{-- {{ csrf_field() }} --}}
-              <div class="col m2 s3">
+              <div class="input-field col m2 s3">
                 <select name="periode"  id="" style="height:30px;">
-                  <option value="" disabled selected>Periode</option>
+                  {{-- <option value="" disabled selected>Periode</option> --}}
+                  <option value="">Semua</option>
                   {{-- <option value="" selected>All</option> --}}
                   @foreach ($periode as $per)
                     <option @isset($_GET['periode']) {{($_GET['periode']==$per->id) ? 'selected' :''}} @endisset
                       value="{{$per->id}}">{{$per->periode}}</option>
                   @endforeach
                 </select>
-                <label>Tahun Ajaran</label>
+                <label>Periode</label>
               </div>
-              <div class="col m2 s2">
+              <div class="input-field col m2 s2">
                 <select name="jenkel" id="">
-                  <option value="" disabled selected>Jenis Kelamin</option>
+                  {{-- <option value="" disabled selected>Jenis Kelamin</option> --}}
+                  <option value="">Semua</option>
                   @php $jenkel=isset($_GET['jenkel']) ? $_GET['jenkel'] : ''; @endphp
                   <option {{($jenkel=="laki-laki") ? 'selected' :''}} value="laki-laki">laki-laki</option>
                   <option {{($jenkel=="perempuan") ? 'selected' :''}} value="perempuan">perempuan</option>
                 </select>
                 <label>Jenis Kelamin</label>
               </div>
-              <div class="col m1 s2">
+              <div class="input-field col m1 s2">
                 <select name="agama">
-                  <option value="" disabled selected>Agama</option>
+                  {{-- <option value="" disabled selected>Agama</option> --}}
+                  <option value="">Semua</option>
                     @php $agama=isset($_GET['agama']) ? $_GET['agama'] : ''; @endphp
                     <option {{($agama=="islam")  ? 'selected' :''}}  value="islam">Islam</option>
                     <option {{($agama=="kristen")? 'selected' :''}}  value="kristen">Kristen</option>
@@ -60,23 +63,24 @@
                 </select>
                 <label>Agama</label>
               </div>
-              <div class="col m2 s3 ">
+              <div class="input-field col m2 s3 ">
                 <select  name="status_diterima">
-                  <option value="" disabled selected>Status diterima</option>
+                  {{-- <option value="" disabled selected>Status diterima</option> --}}
+                  <option value="">Semua</option>
                     @php $status_diterima=isset($_GET['status_diterima']) ? $_GET['status_diterima'] : ''; @endphp
                     <option {{($status_diterima=="Lulus")       ? 'selected' :''}} value="Lulus">Lulus</option>
                     <option {{($status_diterima=="Tidak Lulus") ? 'selected' :''}} value="Tidak Lulus">Tidak Lulus</option>
                 </select>
                 <label>Status Diterima</label>
               </div>
-              <div class="col m1 s2 ">
+              <div class="input-field col m1 s2 ">
                 <button type="submit" class="btn btn-primary white black-text left"><b>filter</b></button>
               </div>
         </form>
         {{-- search form --}}
         {{-- Trigger Form --}}
         <div class="col m1 s12"></div>
-        <div class="col m2 s10">
+        <div class="input-field col m2 s10">
           <select required name="aksi" class="browser-default" id="multi_aksi_select" style="height:36px;">
             <option value="" disabled selected>Pilih Aksi</option>
             <option value="../peserta/destroy">Hapus</option>
@@ -85,7 +89,7 @@
             <option value="../peserta/update_diterima/1">Status diterima: Tidak Lulus(default)</option>
           </select>
         </div>
-        <div class="col m1 s2">
+        <div class="input-field col m1 s2">
           <button id="btn_multi_select" disabled type="submit" class="white black-text left  tooltipped"
                   data-position="right" data-delay="50" data-tooltip="apply aksi">
           <i class="material-icons">send</i></button>
@@ -93,7 +97,12 @@
         {{-- </form> --}}
       </div><hr>
       {{-- end filter --}}
-      <pre><b>Total records: {{$users->total()}}</b></pre>
+      <div class="col m9">
+        <pre><b>Total records: {{$users->total()}}</b></pre>
+      </div>
+      @if ($errors->has('id'))
+        <span class="z-depth-1 #ffebee red lighten-5 red-text">Aksi gagal! tidak ada id yang dipilih!</span>
+      @endif
       <table class="striped  responsive-table">
          <thead>
            <tr>

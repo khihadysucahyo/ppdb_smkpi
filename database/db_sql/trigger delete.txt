@@ -1,0 +1,5 @@
+CREATE TRIGGER `trigger_delete_profile_nilai` AFTER DELETE ON `users`
+ FOR EACH ROW BEGIN
+  	DELETE FROM profiles WHERE user_id=old.id;
+    DELETE FROM nilais WHERE user_id=old.id;
+END

@@ -171,10 +171,10 @@ class AdminController extends Controller
 
     public function pesan()
     {
-      $users     = User::Where('role','<>',2)->get();
-      $profile = Profile::Where('user_id',Auth::user()->id)->get()->first();
-      $pesan     = Pesan::Where('pengirim', 'peserta')->orderBy('created_at', 'desc')->paginate(8);
-      $terkirim  = Pesan::Where('pengirim', 'admin')->orderBy('created_at', 'desc')->paginate(8);
+      $users     = User::join('profiles', 'profiles.user_id','=','users.id')->Where('role',1)->get();
+      $profile   = Profile::Where('user_id',Auth::user()->id)->get()->first();
+      $pesan     = Pesan::join('users', 'pesans.id_peserta','=','users.id')->Where('pesans.pengirim', 'peserta')->orderBy('pesans.created_at', 'desc')->paginate(8);
+      $terkirim  = Pesan::join('users', 'pesans.id_peserta','=','users.id')->Where('pesans.pengirim', 'admin')->orderBy('pesans.created_at', 'desc')->paginate(8);
       return view('admin.pesan', compact('users', 'profile', 'pesan', 'terkirim'));
     }
 
@@ -229,6 +229,7 @@ class AdminController extends Controller
     // aksi_multiple_select
     public function multi_destroy(Request $request)
     {
+        $this->validate($request, ['id'=>'required']);
         $usersID = array_merge(array_map('intval', array_slice($request->id, 0)));
         $users = User::destroy($usersID);
         return redirect()->back()->with('message', count($request->id).' records peserta telah dihapus!');
@@ -236,6 +237,7 @@ class AdminController extends Controller
 
     public function multi_verifikasi(Request $request, $id)
     {
+        $this->validate($request, ['id'=>'required']);
         $usersID    = array_merge(array_map('intval', array_slice($request->id, 0)));
         $verifikasi = ($id==0) ? 'Terverifikasi' : '';
         $users      = Profile::whereIn('user_id', $usersID)->update(['status_verifikasi'=>$verifikasi]);
@@ -245,6 +247,7 @@ class AdminController extends Controller
     public function multi_diterima(Request $request, $id)
     {
         // by KhihadySucahyo, Kalo Objek manggil onbjek gaperlu diekstrak objeknya dan tanpa [] wkwk
+        $this->validate($request, ['id'=>'required']);
         $usersID    = array_merge(array_map('intval', array_slice($request->id, 0)));
         $diterima   = ($id==0) ? 'Lulus' : 'Tidak Lulus';
         $users      = Profile::whereIn('user_id', $usersID)->update(['status_diterima'=>$diterima]);

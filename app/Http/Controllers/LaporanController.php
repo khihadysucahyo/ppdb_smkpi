@@ -44,7 +44,7 @@ class LaporanController extends Controller
         ->title('Status Biodata')
         ->labels($status_bio->pluck('status_biodata')->toArray())
         ->values($status_bio->pluck('jml_perStatBio')->toArray())
-        ->dimensions(500,400)
+        ->dimensions(0,400)
         ->responsive(true);
 
       $chartKelulusan = Charts::create('pie', 'highcharts')

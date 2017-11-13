@@ -46,8 +46,64 @@
           </div>
         </div>
       </div>
+    </div>
 
-      <div class="col m5">
+    <div class="col s5">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-title left-align indigo-text"><i class="material-icons right">report</i>Laporan PPDB</div>
+          <div class="card-action">
+              {!! $chartBio->render() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col offset-s1 s5">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-title left-align indigo-text"><i class="material-icons right">report</i>Laporan PPDB</div>
+          <div class="card-action ">
+            {!! $chartKelulusan->render() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s5">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-title left-align indigo-text"><i class="material-icons right">report</i>Laporan PPDB</div>
+          <div class="card-action ">
+            {!! $chart->render() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col offset-s1 s5">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-title left-align indigo-text"><i class="material-icons right">report</i>Laporan PPDB</div>
+          <div class="card-action ">
+            {!! $chartAgama->render() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s11">
+      <div class="card">
+        <div class="card-content">
+          <div class="card-title left-align indigo-text"><i class="material-icons right">report</i>Laporan PPDB</div>
+          <div class="card-action ">
+            {!! $dt_pertahun->render() !!}
+          </div>
+        </div>
+      </div>
+    </div>
+
+      {{-- <div class="col m5">
         {!! $chartBio->render() !!}
       </div>
       <div class="col m5">
@@ -61,7 +117,7 @@
       </div>
       <div class="col m5">
         {!! $dt_pertahun->render() !!}
-      </div>
+      </div> --}}
 
       {{-- <h4>STATISTIK</h4>
       <center>
@@ -70,7 +126,6 @@
       <center>
           {!! $dt_pertahun->render() !!}
       </center> --}}
-    </div>
 
   </div>
 </div>

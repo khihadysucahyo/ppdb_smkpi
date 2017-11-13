@@ -52,7 +52,7 @@
                    <a href="../../hapus/{{$user->id}}" onclick="return confirm('hapus peserta {{$user->email}}?')">
                      <i class="material-icons black-text">delete_forever</i>
                    </a>
-                   <a href="cetakform/{{$user->user_id}}"><i class="material-icons black-text">print</i></a>
+                   {{-- <a href="cetakform/{{$user->user_id}}"><i class="material-icons black-text">print</i></a> --}}
                  </td>
                </tr>
                @php $i++; @endphp

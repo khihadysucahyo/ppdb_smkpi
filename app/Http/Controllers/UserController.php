@@ -49,6 +49,13 @@ class UserController extends Controller
         return $pdf->stream('formulir.pdf');
     }
 
+    public function cetakHasilKelulusan(){
+        $id=Auth::user()->id;
+        $profile = Profile::Where('user_id',$id)->get()->first();
+        $pdf=PDF::loadView('pdf.hasilkelulusan', compact('profile'));
+        $pdf->setPaper('a4', 'potrait');
+        return $pdf->stream('hasilkelulusan.pdf');
+    }
 
     public function simpan(SimpanRequest $request)
     {

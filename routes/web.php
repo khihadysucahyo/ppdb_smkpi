@@ -14,23 +14,23 @@ Route::get('info_ppdb/{id}', 'PublicController@info_detail');
 Route::group(['middleware'=>'admin'], function(){
     Route::get('cetaklap', 'AdminController@cetakLap');
 
-    Route::get('admin/user', 'adminController@admin_user');
-    Route::get('admin/tambah_user', 'adminController@tambah_admin_user');
-    Route::post('admin/tambah_user', 'adminController@store_admin_user');
+    Route::get('admin/user', 'AdminController@admin_user');
+    Route::get('admin/tambah_user', 'AdminController@tambah_admin_user');
+    Route::post('admin/tambah_user', 'AdminController@store_admin_user');
 
-    Route::get('admin', 'adminController@index');
-    Route::get('peserta', 'adminController@peserta');
-    Route::get('peserta/cari', 'adminController@cari_peserta');
-    Route::get('peserta/filter', 'adminController@filter');
+    Route::get('admin', 'AdminController@index');
+    Route::get('peserta', 'AdminController@peserta');
+    Route::get('peserta/cari', 'AdminController@cari_peserta');
+    Route::get('peserta/filter', 'AdminController@filter');
     Route::get('cetakform/{id}', 'AdminController@cetakForm');
     Route::get('hapus/{id}', 'AdminController@hapus');
     Route::get('edit/{id}', 'AdminController@edit');
     Route::post('edit/{id}', 'AdminController@update');
     Route::post('upload/{id}', 'AdminController@upload');
 
-    Route::post('peserta/destroy', 'adminController@multi_destroy');
-    Route::post('peserta/update_verifikasi/{id}', 'adminController@multi_verifikasi');
-    Route::post('peserta/update_diterima/{id}', 'adminController@multi_diterima');
+    Route::post('peserta/destroy', 'AdminController@multi_destroy');
+    Route::post('peserta/update_verifikasi/{id}', 'AdminController@multi_verifikasi');
+    Route::post('peserta/update_diterima/{id}', 'AdminController@multi_diterima');
 
     // laporan
     Route::post('laporan/data_pendaftar', 'LaporanController@lap_data_pendaftar');
@@ -85,4 +85,5 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('send','TelegramController@postSendMessage');
 
     Route::get('hasil_seleksi','AdminController@hasil_seleksi');
+    Route::get('cetakhasilkelulusan', 'UserController@cetakHasilKelulusan');
 });
