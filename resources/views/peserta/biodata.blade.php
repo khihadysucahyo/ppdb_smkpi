@@ -21,7 +21,14 @@
 @endif
 
 <div class="row">
-  <div class="col offset-s1 s10 left-align teal-text right-align">
+  <div class="col  offset-s1 s5 left-align teal-text left-align">
+      @if ($profile->status_verifikasi=='Terverifikasi')
+        <b><a href="../cetakFormUjian" ><i class="material-icons left">print</i>CETAK KARTU TES WAWANCARA</a></b>
+      @else
+        <b><strike><a href="#" class="tooltipped" data-tooltip="menunggu verifikasi!" data-position="right"><i class="material-icons left">print</i>CETAK KARTU TES WAWANCARA</a></strike</b>
+      @endif
+  </div>
+  <div class="col  s5 left-align teal-text right-align">
       @php $icon_=($profile->status_verifikasi<>'Terverifikasi') ? 'update' : 'check_circle' @endphp
       <b><i class="material-icons right">{{$icon_}}</i>{{$profile->status_verifikasi}}</b>
   </div>

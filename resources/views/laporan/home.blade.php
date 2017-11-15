@@ -26,13 +26,13 @@
                   </div>
 
                   <div id="div_ta" style="display:none;" class="input-field col m3 s12 ">
-                    <select name="tahun_ajaran" required >
+                    <select name="periode" required >
                       <option  disabled selected>Pilih salah satu</option>
                       @foreach ($periode as $periode_)
-                        <option value="{{$periode_->id}}">{{$periode_->tahun_ajaran}}</option>
+                        <option value="{{$periode_->id}}">{{$periode_->periode}}</option>
                       @endforeach
                     </select>
-                    <label>Tahun Ajaran</label>
+                    <label>Periode</label>
                   </div>
 
 

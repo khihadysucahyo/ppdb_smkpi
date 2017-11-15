@@ -12,7 +12,7 @@ class InformasiRequest extends FormRequest
      * @return bool
      */
      public function response(array $errors){
-         return redirect()->back()->with('message', 'Pesan gagal dikirim!')->withErrors($errors)->withInput();
+         return redirect()->back()->with('message', 'Info gagal disimpan!')->withErrors($errors)->withInput();
      }
 
     public function authorize()
@@ -28,7 +28,7 @@ class InformasiRequest extends FormRequest
     public function rules()
     {
         return [
-          'title'  => 'required|max:30',
+          'title'  => 'required|max:60',
           'isi_info' => 'required|max:700',
           'gambar' => 'mimes:jpeg,png,pdf,rar|max:1500',
           'lampiran' => 'mimes:jpeg,png,pdf,rar|max:1500',
@@ -39,7 +39,7 @@ class InformasiRequest extends FormRequest
     {
       return [
             'title.required' => 'Title Tidak Boleh Kosong!',
-            'title.max' => 'Title Maksimal 30 Karakter!',
+            'title.max' => 'Title Maksimal 60 Karakter!',
             'isi_info.required' => 'Info teks Tidak Boleh Kosong!',
             'isi_info.max' => 'Info teks Maksimal 700 Karakter!',
             'gambar.mimes' => 'Gambar hanya boleh (jpg,png,pdf,rar)',

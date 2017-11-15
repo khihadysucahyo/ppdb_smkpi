@@ -67,7 +67,8 @@ class PesanController extends Controller
             'pengirim' => 'peserta',
             'jenis_pesan' => 'reply',
         ]);
-        event(new UserMengirimPesan());
+        $id_pesan=Pesan::where('id_peserta', Auth::user()->id)->whereRaw('id_pesan = (select max(`id_pesan`) from pesans)')->get()->first();
+        event(new UserMengirimPesan($request,$id_pesan));
         return redirect('/pesan')->with('message', 'berhasil membalas pesan!');
     }
 

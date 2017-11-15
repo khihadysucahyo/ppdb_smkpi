@@ -42,7 +42,7 @@ Total Pendaftar : {{count($users)}}
   <thead style="font-weight:bold;">
     <tr>
       <td width="20">No</td>
-      <td width="240">Tahun Ajaran</td>
+      <td width="240">Periode</td>
       <td width="220">Jumlah Pendaftar</td>
     </tr>
   </thead>
@@ -53,7 +53,7 @@ Total Pendaftar : {{count($users)}}
     @foreach ($users as $user)
       <tr>
         <td>{{$i}}.</td>
-        <td>{{$user->tahun_ajaran}}</td>
+        <td>{{$user->periode}}</td>
         <td>{{$user->jml_pendaftar}}</td>
       </tr>
       @php $i++; @endphp

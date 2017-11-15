@@ -33,7 +33,7 @@ pre.prefont{
 
 <hr style="border-width: 2px;">
 <pre class="prefont">
-Tahun Ajaran    : {{$tahun_ajaran->tahun_ajaran}}
+Periode         : {{$periode->periode}}
 Total Pendaftar : {{count($users)}}
 </pre>
 <div class="font" style="margin-left:-5px;">

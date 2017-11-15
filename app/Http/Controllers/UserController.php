@@ -49,6 +49,19 @@ class UserController extends Controller
         return $pdf->stream('formulir.pdf');
     }
 
+    public function cetakFormUjian()
+    {
+        $id=Auth::user()->id;
+        $profile = Profile::Where('user_id',$id)->get()->first();
+        if ($profile->status_verifikasi<>'Terverifikasi') {
+          return redirect()->back()->with('message', 'Data anda belum terverfikasi!');
+        }else{
+          $pdf=PDF::loadView('pdf.formUjianWawancara', compact('profile'));
+          $pdf->setPaper('a4', 'potrait');
+          return $pdf->stream('formUjianWawancara.pdf');
+        }
+    }
+
     public function cetakHasilKelulusan(){
         $id=Auth::user()->id;
         $profile = Profile::Where('user_id',$id)->get()->first();

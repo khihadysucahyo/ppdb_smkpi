@@ -28,7 +28,7 @@ class LaporanRequest extends FormRequest
     public function rules()
     {
         return [
-          'tahun_ajaran'  => 'required',
+          'periode'  => 'required',
           'jenis_laporan' => 'required',
         ];
     }

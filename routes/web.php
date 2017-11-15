@@ -75,6 +75,7 @@ Route::group(['middleware'=>'auth'], function(){
     Route::post('upload', 'UserController@upload');
     // Route::get('/download/{file}', 'UserController@download');
     Route::get('cetakform', 'UserController@cetakForm');
+    Route::get('cetakFormUjian', 'UserController@cetakFormUjian');
 
     Route::get('pesan', 'PesanController@index');
     Route::post('pesan', 'PesanController@send');

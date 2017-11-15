@@ -26,7 +26,7 @@
       <!-- <div class="navbar-fixed"> -->
       {{-- buat dropdown pc --}}
       <ul id="menuDropdown" class="dropdown-content">
-        <li> <a href="/faq">F.A.Q</a></li>
+        {{-- <li> <a href="/faq">F.A.Q</a></li> --}}
         <li> <a href="/pesan">Buat Pesan</a></li>
       </ul>
       <ul id="dropdownPPDB" class="dropdown-content">
@@ -35,7 +35,7 @@
       </ul>
       {{-- buat dropdown gadget --}}
       <ul id="menuDropdown2" class="dropdown-content">
-        <li> <a href="#">F.A.Q</a></li>
+        {{-- <li> <a href="#">F.A.Q</a></li> --}}
         <li> <a href="#">Buat Pesan</a></li>
       </ul>
       <ul id="dropdownPPDB2" class="dropdown-content">
